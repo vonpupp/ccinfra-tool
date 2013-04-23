@@ -127,11 +127,11 @@ zone "0.0.127.in-addr.arpa" in {
 # /etc/sysconfig/named
 
 include "/etc/named.conf.include";
-zone "$ccid.$ccdomain" in {
+zone "br210008.congregacao.org.br" in {
 	allow-transfer { any; };
-	file "dyn/$ccid.$ccdomain";
+	file "dyn/br210008.congregacao.org.br";
 	type master;
-	allow-update { key $rndckey; };
+	allow-update { key dhcp_updates; };
 };
 logging {
 	category queries { log_syslog; };
@@ -140,11 +140,11 @@ logging {
 	category default { log_syslog; };
 	channel log_syslog { syslog; };
 };
-zone "$dnsreversezone" in {
+zone "0.0.10.in-addr.arpa" in {
 	allow-transfer { any; };
-	file "dyn/$dnsreversezone";
+	file "dyn/0.0.10.in-addr.arpa";
 	type master;
-	allow-update { key $rndckey; };
+	allow-update { key dhcp_updates; };
 };
 
 # You can insert further zone records for your own domains below or create

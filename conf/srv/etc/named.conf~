@@ -140,9 +140,9 @@ logging {
 	category default { log_syslog; };
 	channel log_syslog { syslog; };
 };
-zone "$dnsreversezone" in {
+zone "0.0.10.in-addr.arpa" in {
 	allow-transfer { any; };
-	file "dyn/$dnsreversezone";
+	file "dyn/0.0.10.in-addr.arpa";
 	type master;
 	allow-update { key $rndckey; };
 };

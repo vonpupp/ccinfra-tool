@@ -1,7 +1,7 @@
 {
 	"service": "dhcpd",
 	"vars": {
-	    "ccid": "br210008",
+	    "uuid": "br210008",
 	    "ccdomain": "congregacao.org.br",
 	    "server": "10.0.0.1",
 	    "nameserver2": "208.67.220.220",
