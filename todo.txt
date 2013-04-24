@@ -1,0 +1,41 @@
+Configure:
+
+=== Manual ===
+Server (one/two interfaces):
+- Network
+    Interactive: two interfaces?
+        if no: ask for gateway
+        if yes: eth0=lan, eth1=wan
+- Test connectivity (ping, nslookup)
+    if no: ask for an action and halt
+
+First approach:
+    AUTOYAST
+
+=== Automatic ===
+- Packages install
+    Files
+    
+- Ask: two interfaces?
+        if no: ask for gateway
+        if yes: ask which is lan and which is wan
+
+- OpenVPN (ipv4 / ipv6)
+    Test connectivity
+        if no: ??? FTW
+        if yes: report and add to puppet
+- Puppet
+    Git?
+        pull?
+        push?
+    Traditional?
+
+- NTP
+- DHCP
+- DNS
+- LDAP
+- CCBSist
+- NFS
+- Samba
+
+- Firewall
