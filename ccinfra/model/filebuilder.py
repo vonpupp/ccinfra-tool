@@ -25,24 +25,33 @@ from pprint import pprint
 #            'dnsreversezone':'0.0.10.in-addr.arpa',
 #          }
 
-f = open('conf/conf.json')
 
-jdata = json.load(f)
-pprint(jdata)
-f.close()
-
-js = json.dumps(jdata, sort_keys=True,
-                indent=4, separators=(',', ' : '))
-print js
-
-fin = open('conf/dhcpd.conf')
-fout = open('out/dhcpd.conf', 'w')
-for line in fin:
-    out_line = line
-    s = Template(line)
-#    if '$fqdn' in line:
+def FileBuilder(input_conf):
     try:
-        out_line = s.substitute(jdata['vars'])
-    except KeyError, err:
-        print 'ERROR: ' + str(err) + ' variable is missing'
-    fout.write(out_line)
+
+        input_filename = split(input_conf, "/")[:-1]
+        import pdb; pdb.trace()
+        output_filename = 'out/' + split(input_conf, "/")
+        fin = open(input_conf)
+        fout = open(output_filename, 'w')
+
+        f = open('conf/conf.json')
+
+        jdata = json.load(f)
+        pprint(jdata)
+        f.close()
+
+        js = json.dumps(jdata, sort_keys=True,
+                        indent=4, separators=(',', ' : '))
+        print js
+        for line in fin:
+            out_line = line
+            s = Template(line)
+        #    if '$fqdn' in line:
+            try:
+                out_line = s.substitute(jdata['vars'])
+            except KeyError, err:
+                print 'ERROR: ' + str(err) + ' variable is missing'
+            fout.write(out_line)
+    except Exception, e:
+        raise e
