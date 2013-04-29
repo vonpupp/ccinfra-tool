@@ -36,3 +36,5 @@ __copyright__ = "2013 Albert De La Fuente"
         
     Examples:
 """
+
+# vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
