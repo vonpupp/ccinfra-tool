@@ -56,7 +56,9 @@ def main(argv):
 
     # Do stuff
     #conf = FileBuilder('conf/srv/etc/dhcpd.conf')
-    conf = FileBuilder('conf/srv/etc/named.conf')
+    fb = FileBuilder()
+    fb.set_out_path('out/etc/')
+    conf = fb.build_file('conf/srv/etc/named.conf')
 
 if __name__ == '__main__':
     sys.exit(main(sys.argv[1:]))
