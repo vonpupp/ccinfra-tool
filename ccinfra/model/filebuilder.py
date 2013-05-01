@@ -3,6 +3,7 @@
 from string import Template
 import json
 from pprint import pprint
+import os
 
 # class MyTemplate(string.Template):
 #     delimiter = '%'
@@ -24,34 +25,45 @@ from pprint import pprint
 # #           'dnsforwardzone':'br210008.congregacao.org.br.',
 #            'dnsreversezone':'0.0.10.in-addr.arpa',
 #          }
+OUTDIR = 'out/'
 
-
-def FileBuilder(input_conf):
+def FileBuilder(input_confpath):
     try:
+        # I assume that conf/srv (two dirs) are always prepended to the path
+        relative_etc_filename = input_confpath.split('etc/')[1]
+        output_confpath = OUTDIR + 'etc/' + relative_etc_filename
+        
+        filename = output_confpath.split('/')[-1]
+        directory = output_confpath.replace(filename, '')
+        
+        fin = open(input_confpath)
+        try:
+            fout = open(output_confpath, 'w')
+        except:
+            os.makedirs(directory)
 
-        input_filename = split(input_conf, "/")[:-1]
-        import pdb; pdb.trace()
-        output_filename = 'out/' + split(input_conf, "/")
-        fin = open(input_conf)
-        fout = open(output_filename, 'w')
+        #vars_file = filename.split('.')[0]
+        fvars = open(input_confpath + '.vars')
 
-        f = open('conf/conf.json')
-
-        jdata = json.load(f)
-        pprint(jdata)
-        f.close()
-
-        js = json.dumps(jdata, sort_keys=True,
+        vars_data = json.load(fvars)
+        fvars.close()
+        #pprint(vars_data)
+        
+        js = json.dumps(vars_data, sort_keys=True,
                         indent=4, separators=(',', ' : '))
         print js
-        for line in fin:
-            out_line = line
-            s = Template(line)
-        #    if '$fqdn' in line:
-            try:
-                out_line = s.substitute(jdata['vars'])
-            except KeyError, err:
-                print 'ERROR: ' + str(err) + ' variable is missing'
-            fout.write(out_line)
+        try:
+            for line in fin:
+                try:
+                    out_line = line
+                    s = Template(line)
+                    out_line = s.substitute(vars_data['vars'])
+                    fout.write(out_line)
+                except KeyError, err:
+                    print 'ERROR: ' + str(err) + ' variable is missing'
+        finally:
+            fout.close()
+            fin.close()
+        return output_confpath
     except Exception, e:
         raise e

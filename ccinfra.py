@@ -15,11 +15,11 @@
 #
 #   Dependencies:
 #
-__version__ = "0.1"
-__author__ = "Albert De La Fuente"
-__copyright__ = "2013 Congregacao Crista no Brasil / Albert De La Fuente"
+__version__ = '0.1'
+__author__ = 'Albert De La Fuente'
+__copyright__ = '2013 Congregacao Crista no Brasil / Albert De La Fuente'
 
-"""
+'''
     A tool for automatic lconfiguration for servers and desktops
 
     Command Line Usage:
@@ -33,38 +33,32 @@ __copyright__ = "2013 Congregacao Crista no Brasil / Albert De La Fuente"
     Arguments:
 
     Examples:
-"""
+'''
 
 
-import getopt
 import sys
 import argparse
+from ccinfra.model.filebuilder import FileBuilder
 
 
 def main(argv):
     # Parse arguments
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--verbose", help="increase output verbosity",
-                        action="store_true")
-    args = parser.parse_args()
+    #parser = argparse.ArgumentParser()
+    #parser.add_argument('--verbose', help='increase output verbosity',
+    #                    action='store_true')
+    #parser.add_argument('srv', nargs='?', help='server',
+    #                    action='store_true')
+    #args = parser.parse_args()
 
     # Create structures
-    rb = ReqBox()
-    rb.parserverion = 7
 
     # Initialize structures
-    rb.initparser()
-    rb.model.parsefile(rb.inputfile)
 
     # Do stuff
-    if rb.parsefun and rb.parserverion == 7:
-        rb.parsefunobjects("out-fun-objects.csv")
-        rb.parsefunrfilinks("out-fun-rfi-links.csv")
-        rb.parsefunrfnlinks("out-fun-rfn-links.csv")
-        rb.parsefunrgnlinks("out-fun-rgn-links.csv")
-        rb.parsefunrnflinks("out-fun-rnf-links.csv")
+    #conf = FileBuilder('conf/srv/etc/dhcpd.conf')
+    conf = FileBuilder('conf/srv/etc/named.conf')
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     sys.exit(main(sys.argv[1:]))
 
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
