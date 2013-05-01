@@ -13,12 +13,12 @@ OUTDIR = 'out/'
 
 
 class FileBuilder():
-    def FileBuilder():
+    def FileBuilder(self):
         self.conf_file = ''
         self.conf_path = ''
         self.input_path = ''
         self.output_path = ''
-        
+
     def set_out_path(self, output_path):
         self.output_path = output_path
 
@@ -29,27 +29,27 @@ class FileBuilder():
         except:
             os.makedirs(self.output_path)
         return result
-    
+
     def get_path_and_full_conf(self):
         self.conf_file = self.input_conf.split('/')[-1]
         self.conf_path = self.input_conf.rsplit('/', 1)[0]
-        
+
         return self.conf_path, self.conf_file
-    
+
     def get_io_confs(self):
         self.relative_etc_conf = self.input_conf.split('etc/')[1]
         self.output_conf = OUTDIR + 'etc/' + self.relative_etc_conf
-    
+
         return self.input_conf, self.output_conf
-    
+
     def get_io_paths(self):
         self.get_path_and_full_conf()
         self.get_io_confs()
         self.input_path = self.input_conf.replace(self.conf_file, '')
         self.output_path = self.output_conf.replace(self.conf_file, '')
-        
+
         return self.input_path, self.output_path
-    
+
     def load_vars_file(self, input_conf):
         try:
             fvars = open(input_conf + '.vars')
@@ -57,8 +57,8 @@ class FileBuilder():
             fvars.close()
             return vars_data
         except:
-            return {'vars':{}}
-            
+            return {'vars': {}}
+
     def load_vars(self):
         try:
             self.get_path_and_full_conf()
@@ -75,9 +75,8 @@ class FileBuilder():
         finally:
             self.vars_data = {'vars': dict(vars_global['vars'].items() +
                                            vars_common['vars'].items() +
-                                           vars_conf['vars'].items())
-                             }
-            return self.vars_data    
+                                           vars_conf['vars'].items())}
+            return self.vars_data
 
     def build_file(self, input_conf):
         try:
@@ -86,13 +85,13 @@ class FileBuilder():
             self.get_path_and_full_conf()
             self.get_io_confs()
             self.get_io_paths()
-            
+
             self.fin = open(input_conf)
             self.fout = self.open_or_create_dir()
-    
+
             vars_data = self.load_vars()
             #pprint(vars_data)
-            
+
             js = json.dumps(vars_data, sort_keys=True,
                             indent=4, separators=(',', ' : '))
             print js
