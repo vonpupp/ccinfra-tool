@@ -5,48 +5,23 @@ import json
 from pprint import pprint
 import os
 
+OUTDIR = 'out/'
+
 # class MyTemplate(string.Template):
 #     delimiter = '%'
 #     idpattern = '[a-z]+_[a-z]+'
 
-# params = { 'uuid':'br210008',
-# #           'domain':'br210008.congregacao.org.br',
-#            'ccdomain':'congregacao.org.br',
-#            'server':'10.0.0.1',
-# #           'nameserver1':'10.0.0.1',
-#            'nameserver2':'208.67.220.220',
-# #           'gw':'10.0.0.1',
-#            'rndcfile':'/etc/named.d/dns.key',
-#            'rndckey':'dhcp_updates',
-#            'subnet':'10.0.0.0',
-#            'netmask':'255.255.252.0',
-#            'dhcpdstart':'10.0.0.31',
-#            'dhcpdend':'10.0.3.240',
-# #           'dnsforwardzone':'br210008.congregacao.org.br.',
-#            'dnsreversezone':'0.0.10.in-addr.arpa',
-#          }
-OUTDIR = 'out/'
-
-def FileBuilder(input_confpath):
+def FileBuilder(input_conf):
     try:
         # I assume that conf/srv (two dirs) are always prepended to the path
-        relative_etc_filename = input_confpath.split('etc/')[1]
-        output_confpath = OUTDIR + 'etc/' + relative_etc_filename
+        conf_path, conf_file = get_path_and_full_conf(input_conf)
+        input_conf, output_conf = get_io_confs(input_conf)
+        input_path, output_path = get_io_paths(input_conf)
         
-        filename = output_confpath.split('/')[-1]
-        directory = output_confpath.replace(filename, '')
-        
-        fin = open(input_confpath)
-        try:
-            fout = open(output_confpath, 'w')
-        except:
-            os.makedirs(directory)
+        fin = open(input_conf)
+        fout = open_or_create_dir(output_conf)
 
-        #vars_file = filename.split('.')[0]
-        fvars = open(input_confpath + '.vars')
-
-        vars_data = json.load(fvars)
-        fvars.close()
+        vars_data = load_vars(input_conf)
         #pprint(vars_data)
         
         js = json.dumps(vars_data, sort_keys=True,
@@ -64,6 +39,62 @@ def FileBuilder(input_confpath):
         finally:
             fout.close()
             fin.close()
-        return output_confpath
+        return output_conf
     except Exception, e:
         raise e
+    
+def open_or_create_dir(output_conf):
+    input_path, output_path = get_io_paths(output_conf)
+    try:
+        result = open(output_conf, 'w')
+    except:
+        os.makedirs(output_path)
+    return result
+
+def get_path_and_full_conf(input_conf):
+    conf_file = input_conf.split('/')[-1]
+    conf_path = input_conf.rsplit('/', 1)[0]
+    return conf_path, conf_file
+
+def get_io_confs(input_conf):
+    relative_etc_conf = input_conf.split('etc/')[1]
+    output_conf = OUTDIR + 'etc/' + relative_etc_conf
+
+    return input_conf, output_conf
+
+def get_io_paths(input_conf):
+    _, conf_file = get_path_and_full_conf(input_conf)
+    input_conf, output_conf = get_io_confs(input_conf)
+    input_path = input_conf.replace(conf_file, '')
+    output_path = output_conf.replace(conf_file, '')
+    
+    return input_path, output_path
+
+def load_vars_file(input_conf):
+    try:
+        fvars = open(input_conf + '.vars')
+        vars_data = json.load(fvars)
+        fvars.close()
+        return vars_data
+    except:
+        return {'vars':{}}
+        
+def load_vars(input_conf):
+    try:
+        _, conf_file = get_path_and_full_conf(input_conf)
+        input_path, _ = get_io_paths(input_conf)
+        vars_global = {}
+        vars_common = {}
+        vars_conf = {}
+        # First load the globals
+        vars_global = load_vars_file(input_path + 'ccinfra.global')
+        # Then the commons
+        vars_common = load_vars_file(input_path + 'ccinfra.common')
+        # Finally the local conf (overrides will be down-top)
+        vars_conf = load_vars_file(input_conf)
+    finally:
+        vars_data = {'vars': dict(vars_global['vars'].items() +
+                                  vars_common['vars'].items() +
+                                  vars_conf['vars'].items())
+                    }
+        return vars_data
