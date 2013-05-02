@@ -35,10 +35,11 @@ __copyright__ = '2013 Congregacao Crista no Brasil / Albert De La Fuente'
     Examples:
 '''
 
-
 import sys
 import argparse
+from subprocess import call
 from ccinfra.model.filebuilder import FileBuilder
+from ccinfra.model.confiterator import ConfIterator
 
 
 def main(argv):
@@ -50,15 +51,22 @@ def main(argv):
     #                    action='store_true')
     #args = parser.parse_args()
 
+    # Clone the config repository
+    call(['sh', 'clone.sh'])
+
     # Create structures
+    fb = FileBuilder()
+    iterator = ConfIterator()
 
     # Initialize structures
+    fb.set_out_path('out/etc/')
+    iterator.set_input_path('conf/srv/')
 
     # Do stuff
-    #conf = FileBuilder('conf/srv/etc/dhcpd.conf')
-    fb = FileBuilder()
-    fb.set_out_path('out/etc/')
-    conf = fb.build_file('conf/srv/etc/named.conf')
+#    fb.build_file('conf/srv/etc/named.conf')
+    for filename in iterator.files():
+        fb.build_file(filename)
+        print filename
 
 if __name__ == '__main__':
     sys.exit(main(sys.argv[1:]))
