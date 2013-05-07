@@ -40,6 +40,7 @@ import argparse
 from subprocess import call
 from ccinfra.model.filebuilder import FileBuilder
 from ccinfra.model.confiterator import ConfIterator
+from ccinfra.model.model import ServerSetup
 
 
 def main(argv):
@@ -63,10 +64,12 @@ def main(argv):
     iterator.set_input_path('conf/srv/')
 
     # Do stuff
+    srv = ServerSetup()
+    srv.set_in_path
 #    fb.build_file('conf/srv/etc/named.conf')
-    for filename in iterator.files():
-        fb.build_file(filename)
-        print filename
+#    for filename in iterator.files():
+#        fb.build_file(filename)
+#        print filename
 
 if __name__ == '__main__':
     sys.exit(main(sys.argv[1:]))

@@ -22,6 +22,9 @@ class FileBuilder():
     def set_out_path(self, output_path):
         self.output_path = output_path
 
+    def set_in_path(self, input_path):
+        self.input_path = input_path
+
     def open_or_create_dir(self):
         self.input_path, self.output_path = self.get_io_paths()
         try:
@@ -67,9 +70,11 @@ class FileBuilder():
             self.vars_common = {}
             self.vars_conf = {}
             # First load the globals
-            vars_global = self.load_vars_file(self.input_path + 'ccinfra.global')
+            vars_global = self.load_vars_file(self.input_path +
+                                              'ccinfra.global')
             # Then the commons
-            vars_common = self.load_vars_file(self.input_path + 'ccinfra.common')
+            vars_common = self.load_vars_file(self.input_path +
+                                              'ccinfra.common')
             # Finally the local conf (overrides will be down-top)
             vars_conf = self.load_vars_file(self.input_conf)
         finally:
@@ -80,7 +85,8 @@ class FileBuilder():
 
     def build_file(self, input_conf):
         try:
-            # I assume that conf/srv (two dirs) are always prepended to the path
+            # I assume that conf/srv (two dirs) are
+            # always prepended to the path
             self.input_conf = input_conf
             self.get_path_and_full_conf()
             self.get_io_confs()
