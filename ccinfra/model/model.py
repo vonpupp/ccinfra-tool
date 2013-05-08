@@ -20,14 +20,20 @@ class ServerSetup(GeneralSetup):
     """
     Attributes:
     """
-    root_conf_out = '/etc'
-    root_conf_in = 'conf/srv/'
-    fb = None
 
     def __init__(self):
+        self.root_conf_out = '/etc'
+        self.root_conf_in = 'conf/srv/'
+
         self.fb = FileBuilder()
         self.fb.set_in_path(self.root_conf_out)
         self.fb.set_out_path(self.root_conf_in)
+
+    def set_in_path(self, conf_in):
+        self.root_conf_in = conf_in
+
+    def set_out_path(self, conf_out):
+        self.root_conf_out = conf_out
 
     def network_setup(self):
         pass
