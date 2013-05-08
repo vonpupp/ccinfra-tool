@@ -27,6 +27,7 @@ class FileBuilder():
 
     def open_or_create_dir(self):
         self.input_path, self.output_path = self.get_io_paths()
+        result = None
         try:
             result = open(self.output_conf, 'w')
         except:
@@ -91,6 +92,9 @@ class FileBuilder():
             self.get_path_and_full_conf()
             self.get_io_confs()
             self.get_io_paths()
+
+            print self.input_conf
+            print self.output_conf
 
             self.fin = open(input_conf)
             self.fout = self.open_or_create_dir()

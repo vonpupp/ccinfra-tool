@@ -22,18 +22,23 @@ class ServerSetup(GeneralSetup):
     """
 
     def __init__(self):
-        self.root_conf_out = '/etc'
-        self.root_conf_in = 'conf/srv/'
-
         self.fb = FileBuilder()
-        self.fb.set_in_path(self.root_conf_out)
-        self.fb.set_out_path(self.root_conf_in)
+        self.set_in_path('conf/')
+        self.set_out_path('out/')
 
     def set_in_path(self, conf_in):
-        self.root_conf_in = conf_in
+        # Assumed that server config will always be at:
+        # conf_in/srv
+        self.root_conf_in = conf_in + 'srv'
+        self.fb.set_in_path(self.root_conf_in)
 
     def set_out_path(self, conf_out):
         self.root_conf_out = conf_out
+        self.fb.set_out_path(self.root_conf_out)
+
+    def build_file(self, conf_in):
+        conf = self.root_conf_in + conf_in
+        self.fb.build_file(conf)
 
     def network_setup(self):
         pass
@@ -52,14 +57,14 @@ class ServerSetup(GeneralSetup):
 
     def isc_dhcpd_setup(self):
         # Explicit paths are better than implicit
-        self.fb.build_file('/etc/dhcpd.conf')
+        self.build_file('/etc/dhcpd.conf')
 
     def named_keys_setup(self):
-        self.fb.build_file('/etc/dhcpd.conf')
+        self.build_file('/etc/rndc.key')
 
     def named_setup(self):
-        self.fb.build_file('named.conf')
-        self.fb.build_file('named.conf.include')
+        self.build_file('/etc/named.conf')
+        self.build_file('/etc/named.conf.include')
 
     def openldap_setup(self):
         pass

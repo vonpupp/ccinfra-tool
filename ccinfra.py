@@ -53,7 +53,7 @@ def main(argv):
     #args = parser.parse_args()
 
     # Clone the config repository
-    call(['sh', 'clone.sh'])
+#    call(['sh', 'clone.sh'])
 
     # Create structures
     fb = FileBuilder()
@@ -65,7 +65,11 @@ def main(argv):
 
     # Do stuff
     srv = ServerSetup()
-    srv.set_in_path
+    srv.set_in_path('conf/')
+    srv.set_out_path('out/')
+    srv.isc_dhcpd_setup()
+    srv.named_keys_setup()
+    srv.named_setup()
 #    fb.build_file('conf/srv/etc/named.conf')
 #    for filename in iterator.files():
 #        fb.build_file(filename)
