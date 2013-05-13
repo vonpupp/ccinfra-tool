@@ -24,6 +24,7 @@ class FileBuilder():
 
     def set_in_path(self, input_path):
         self.input_path = input_path
+        self.load_initial_vars()
 
     def open_or_create_dir(self):
         self.input_path, self.output_path = self.get_io_paths()
@@ -63,25 +64,31 @@ class FileBuilder():
         except:
             return {'vars': {}}
 
+    def load_initial_vars(self):
+        try:
+            self.vars_global = {}
+            self.vars_common = {}
+            # First load the globals
+            self.vars_global = self.load_vars_file(self.input_path +
+                                                   'ccinfra.global')
+            # Then the commons
+            self.vars_common = self.load_vars_file(self.input_path +
+                                                   'ccinfra.common')
+        finally:
+            self.vars_initial = {'vars': dict(self.vars_global['vars'].items() +
+                                            self.vars_common['vars'].items())}
+            return self.vars_initial
+
     def load_vars(self):
         try:
             self.get_path_and_full_conf()
             self.get_io_paths()
-            self.vars_global = {}
-            self.vars_common = {}
             self.vars_conf = {}
-            # First load the globals
-            vars_global = self.load_vars_file(self.input_path +
-                                              'ccinfra.global')
-            # Then the commons
-            vars_common = self.load_vars_file(self.input_path +
-                                              'ccinfra.common')
-            # Finally the local conf (overrides will be down-top)
-            vars_conf = self.load_vars_file(self.input_conf)
+            # This might override will common and global vars
+            self.vars_conf = self.load_vars_file(self.input_conf)
         finally:
-            self.vars_data = {'vars': dict(vars_global['vars'].items() +
-                                           vars_common['vars'].items() +
-                                           vars_conf['vars'].items())}
+            self.vars_data = {'vars': dict(self.vars_initial['vars'].items() +
+                                           self.vars_conf['vars'].items())}
             return self.vars_data
 
     def build_file(self, input_conf):
@@ -91,7 +98,7 @@ class FileBuilder():
             self.input_conf = input_conf
             self.get_path_and_full_conf()
             self.get_io_confs()
-            self.get_io_paths()
+            #self.get_io_paths()
 
             print self.input_conf
             print self.output_conf

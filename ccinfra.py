@@ -56,12 +56,12 @@ def main(argv):
 #    call(['sh', 'clone.sh'])
 
     # Create structures
-    fb = FileBuilder()
-    iterator = ConfIterator()
+    #fb = FileBuilder()
+    #iterator = ConfIterator()
 
     # Initialize structures
-    fb.set_out_path('out/etc/')
-    iterator.set_input_path('conf/srv/')
+    #fb.set_out_path('out/etc/')
+    #iterator.set_input_path('conf/srv/')
 
     # Do stuff
     srv = ServerSetup()
