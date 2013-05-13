@@ -67,6 +67,9 @@ class ServerSetup(GeneralSetup):
     def named_setup(self):
         self.build_file('/etc/named.conf')
         self.build_file('/etc/named.conf.include')
+        self.build_file('/etc/named.d/dns.key')
+        self.build_file('/etc/named.d/forwarders.conf')
+        self.build_file('/etc/named.d/rndc-access.conf')
 
     def ntp_setup(self):
         self.build_file('/etc/ntp.conf')
@@ -75,7 +78,12 @@ class ServerSetup(GeneralSetup):
         self.build_file('/etc/exports')
 
     def openldap_setup(self):
-        pass
+        self.build_file('/etc/ldap.conf')
+        self.build_file('/etc/nsswitch.conf')
+        self.build_file('/etc/pam.d/common-account-pc')
+        self.build_file('/etc/pam.d/common-auth-pc')
+        self.build_file('/etc/pam.d/common-password-pc')
+        self.build_file('/etc/pam.d/common-session-pc')
 
     def ccbsist_setup(self):
         pass
