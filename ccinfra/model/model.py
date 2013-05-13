@@ -68,13 +68,16 @@ class ServerSetup(GeneralSetup):
         self.build_file('/etc/named.conf')
         self.build_file('/etc/named.conf.include')
 
+    def ntp_setup(self):
+        self.build_file('/etc/ntp.conf')
+
+    def nfs_setup(self):
+        self.build_file('/etc/exports')
+
     def openldap_setup(self):
         pass
 
     def ccbsist_setup(self):
-        pass
-
-    def nfs_setup(self):
         pass
 
     def samba_setup(self):

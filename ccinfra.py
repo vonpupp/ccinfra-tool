@@ -70,6 +70,8 @@ def main(argv):
     srv.isc_dhcpd_setup()
     srv.named_keys_setup()
     srv.named_setup()
+    srv.ntp_setup()
+    srv.nfs_setup()
 #    fb.build_file('conf/srv/etc/named.conf')
 #    for filename in iterator.files():
 #        fb.build_file(filename)
