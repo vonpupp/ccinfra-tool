@@ -69,7 +69,7 @@ def main(argv):
     srv.set_out_path('out/')
     srv.isc_dhcpd_setup()
     srv.named_keys_setup()
-#    srv.named_setup()
+    srv.named_setup()
     srv.ntp_setup()
     srv.nfs_setup()
     srv.openldap_setup()
