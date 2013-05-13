@@ -37,6 +37,8 @@ class ServerSetup(GeneralSetup):
         self.fb.set_out_path(self.root_conf_out)
 
     def build_file(self, conf_in):
+        if conf_in.startswith('/'):
+            conf_in = conf_in[1:]
         conf = self.root_conf_in + conf_in
         self.fb.build_file(conf)
 
