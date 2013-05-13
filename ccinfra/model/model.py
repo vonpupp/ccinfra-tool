@@ -85,6 +85,9 @@ class ServerSetup(GeneralSetup):
         self.build_file('/etc/pam.d/common-password-pc')
         self.build_file('/etc/pam.d/common-session-pc')
 
+    def ldap_users_setup(self):
+        pass
+
     def ccbsist_setup(self):
         pass
 
