@@ -81,8 +81,8 @@ class FileBuilder():
 
     def load_vars(self):
         try:
-            self.get_path_and_full_conf()
-            self.get_io_paths()
+            #self.get_path_and_full_conf()
+            #self.get_io_paths()
             self.vars_conf = {}
             # This might override will common and global vars
             self.vars_conf = self.load_vars_file(self.input_conf)
@@ -98,7 +98,7 @@ class FileBuilder():
             self.input_conf = input_conf
             self.get_path_and_full_conf()
             self.get_io_confs()
-            #self.get_io_paths()
+            self.get_io_paths()
 
             print self.input_conf
             print self.output_conf
