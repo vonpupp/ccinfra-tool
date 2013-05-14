@@ -92,8 +92,7 @@ class ServerSetup(GeneralSetup):
         self.build_file('/etc/samba/smb.conf')
 
     def squid_setup(self):
-        #self.build_file('')
-        pass
+        self.build_file('/etc/squid/squid.conf')
 
     def firewall_setup(self):
         pass

@@ -73,6 +73,8 @@ def main(argv):
     srv.ntp_setup()
     srv.nfs_setup()
     srv.openldap_setup()
+    srv.samba_setup()
+    srv.squid_setup()
 #    fb.build_file('conf/srv/etc/named.conf')
 #    for filename in iterator.files():
 #        fb.build_file(filename)
