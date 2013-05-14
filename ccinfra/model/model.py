@@ -55,7 +55,7 @@ class ServerSetup(GeneralSetup):
         pass
 
     def ntp_setup(self):
-        pass
+        self.build_file('/etc/ntp.conf')
 
     def isc_dhcpd_setup(self):
         # Explicit paths are better than implicit
@@ -70,9 +70,6 @@ class ServerSetup(GeneralSetup):
         self.build_file('/etc/named.d/dns.key')
         self.build_file('/etc/named.d/forwarders.conf')
         self.build_file('/etc/named.d/rndc-access.conf')
-
-    def ntp_setup(self):
-        self.build_file('/etc/ntp.conf')
 
     def nfs_setup(self):
         self.build_file('/etc/exports')
@@ -92,12 +89,16 @@ class ServerSetup(GeneralSetup):
         pass
 
     def samba_setup(self):
+        self.build_file('/etc/samba/smb.conf')
+
+    def squid_setup(self):
+        #self.build_file('')
         pass
 
     def firewall_setup(self):
         pass
 
-    def setup_all(self):
+    def setup_default_pattern(self):
         pass
 
 
