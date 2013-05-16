@@ -127,12 +127,15 @@ class FileBuilder():
             try:
                 for line in self.fin:
                     try:
-                        out_line = line
+                        #out_line = line
                         s = Template(line)
                         out_line = s.substitute(vars_data['vars'])
-                        self.fout.write(out_line)
                     except KeyError, err:
                         print 'ERROR: ' + str(err) + ' variable is missing'
+                    except ValueError, err:
+                        out_line = line
+                    finally:
+                        self.fout.write(out_line)
             finally:
                 self.fout.close()
                 self.fin.close()
