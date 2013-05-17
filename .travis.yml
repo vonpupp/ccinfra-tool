@@ -6,6 +6,8 @@ python:
   - "3.3"
 
 #install: "sudo apt-get -qq install libfreetype6-dev liblcms1-dev libwebp-dev"
+install:
+  - "git clone https://github.com/ccinfra/conf.git"
 
 #script:
 #  - python setup.py clean
