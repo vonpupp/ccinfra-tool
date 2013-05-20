@@ -2,6 +2,7 @@
 
 import os
 from filebuilder import FileBuilder
+from subprocess import call
 
 
 class GeneralSetup():
@@ -58,8 +59,9 @@ class ServerSetup(GeneralSetup):
         self.build_file('/etc/ntp.conf')
 
     def isc_dhcpd_setup(self):
-        # Explicit paths are better than implicit
+        # Explicit (relative to etc) paths are better than implicit
         self.build_file('/etc/dhcpd.conf')
+        #call(['service', 'dhcpd restart'])
 
     def named_keys_setup(self):
         self.build_file('/etc/rndc.key')
