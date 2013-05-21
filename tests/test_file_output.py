@@ -1,5 +1,6 @@
 #from __future__ import print_function
 from tester import *
+from ccinfra.model.model import ServerSetup
 
 #import PIL
 #import PIL.Image
