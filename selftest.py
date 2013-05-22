@@ -171,23 +171,23 @@ if __name__ == "__main__":
     print("Python modules loaded from", os.path.dirname(model.__file__))
 #    print("Binary modules loaded from", os.path.dirname(model.core.__file__))
     print("-" * 68)
-    check_module("PIL CORE", "_imaging")
-    check_module("TKINTER", "_imagingtk")
-    check_codec("JPEG", "jpeg")
-    check_codec("ZLIB (PNG/ZIP)", "zip")
-    check_codec("G4 TIFF", "group4")
-    check_module("FREETYPE2", "_imagingft")
-    check_module("LITTLECMS", "_imagingcms")
-    check_module("WEBP", "_webp")
-    try:
-        import _webp
-        if _webp.WebPDecoderBuggyAlpha():
-            print("***", "Transparent WEBP", "support not installed")
-        else:
-            print("---", "Transparent WEBP", "support ok")
-    except Exception:
-        pass
-    print("-" * 68)
+#    check_module("PIL CORE", "_imaging")
+#    check_module("TKINTER", "_imagingtk")
+#    check_codec("JPEG", "jpeg")
+#    check_codec("ZLIB (PNG/ZIP)", "zip")
+#    check_codec("G4 TIFF", "group4")
+#    check_module("FREETYPE2", "_imagingft")
+#    check_module("LITTLECMS", "_imagingcms")
+#    check_module("WEBP", "_webp")
+#    try:
+#        import _webp
+#        if _webp.WebPDecoderBuggyAlpha():
+#            print("***", "Transparent WEBP", "support not installed")
+#        else:
+#            print("---", "Transparent WEBP", "support ok")
+#    except Exception:
+#        pass
+#    print("-" * 68)
 
     # use doctest to make sure the test program behaves as documented!
     import doctest, selftest
