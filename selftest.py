@@ -1,22 +1,11 @@
 # minimal sanity check
 from __future__ import print_function
-ROOT = "."
-
+from ccinfra.model import model
 import os, sys
+
+ROOT = "."
 sys.path.insert(0, ROOT)
 
-from PIL import Image
-from PIL import ImageDraw
-from PIL import ImageFilter
-from PIL import ImageMath
-
-try:
-    Image.core.ping
-except ImportError as v:
-    print("***", v)
-    sys.exit()
-except AttributeError:
-    pass
 
 def _info(im):
     im.load()
@@ -175,13 +164,13 @@ if __name__ == "__main__":
 
     exit_status = 0
 
-    print("-"*68)
+    print("-" * 68)
     #print("PIL", Image.VERSION, "TEST SUMMARY ")
-    print("PIL TEST SUMMARY ")
-    print("-"*68)
-    print("Python modules loaded from", os.path.dirname(Image.__file__))
-    print("Binary modules loaded from", os.path.dirname(Image.core.__file__))
-    print("-"*68)
+    print("CCINFRA TEST SUMMARY ")
+    print("-" * 68)
+    print("Python modules loaded from", os.path.dirname(model.__file__))
+#    print("Binary modules loaded from", os.path.dirname(model.core.__file__))
+    print("-" * 68)
     check_module("PIL CORE", "_imaging")
     check_module("TKINTER", "_imagingtk")
     check_codec("JPEG", "jpeg")
