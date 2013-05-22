@@ -187,7 +187,7 @@ if __name__ == "__main__":
             print("---", "Transparent WEBP", "support ok")
     except Exception:
         pass
-    print("-"*68)
+    print("-" * 68)
 
     # use doctest to make sure the test program behaves as documented!
     import doctest, selftest
