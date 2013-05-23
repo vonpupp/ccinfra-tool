@@ -7,26 +7,16 @@ import sys
 import inspect
 import codecs
 import csv
-import reqbox.lib.rbstrlib as strlib
+from ccinfra.model.filebuilder import FileBuilder
 
 
 rb = None
 
-# Verificar se tem UC sem utilização;
-#   ok: test_parser_missing_01_uc_objects
-# Verificar se tem RFI sem utilização;
-#   ok: test_parser_missing_02_rfi_objects
-# Verificar se tem RFN sem utilização;
-#   ok: test_parser_missing_03_rfn_objects
-class TestMissingObjects(unittest.TestCase):
-    """
-    Attributes:
-        - rb: ReqBox
-    """
-    rb = None
+class FileBuilderTestCase(unittest.TestCase):
+    fb = None
 
     def setUp(self):
-        self.rb = rb
+        self.fb = FileBuilder()
         #self.seq = range(10)
 
     #def uckeymeasure(self, key):
@@ -83,21 +73,6 @@ class TestMissingObjects(unittest.TestCase):
         tagstr = 'RFI'
         self.tag_check(filename, d, tagstr)
 
-
-
-class TestEAIntegrity(unittest.TestCase):
-
-    def setUp(self):
-        self.seq = range(10)
-
-    def test_shuffle(self):
-        # make sure the shuffled sequence does not lose any elements
-        random.shuffle(self.seq)
-        self.seq.sort()
-        self.assertEqual(self.seq, range(10))
-
-        # should raise an exception for an immutable sequence
-        self.assertRaises(TypeError, random.shuffle, (1,2,3))
 
 def fast_tests_suite():
     #args = sys.argv[1:]
