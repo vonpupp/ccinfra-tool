@@ -119,7 +119,7 @@ def tostring(im, format, **options):
 def tempfile(template, *extra):
     import os, os.path, sys, tempfile
     files = []
-    root = os.path.join(tempfile.gettempdir(), 'pillow-tests')
+    root = os.path.join(tempfile.gettempdir(), 'ccinfra-tool-tests')
     try:
         os.mkdir(root)
     except OSError:
@@ -186,7 +186,7 @@ def _setup():
                     os.remove(file)
                 except OSError:
                     pass # report?
-            temp_root = os.path.join(tempfile.gettempdir(), 'pillow-tests')
+            temp_root = os.path.join(tempfile.gettempdir(), 'ccinfra-tool-tests')
             try:
                 os.rmdir(temp_root)
             except OSError:

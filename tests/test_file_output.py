@@ -1,5 +1,6 @@
 #from __future__ import print_function
 from tester import *
+print sys.path
 from ccinfra.model.model import ServerSetup
 
 #import PIL
