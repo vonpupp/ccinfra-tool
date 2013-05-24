@@ -1,18 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from unittest import *
+import unittest
 import sys
 from ccinfra.model.filebuilder import FileBuilder
 
-
-rb = None
 
 class FileBuilderTestCase(unittest.TestCase):
     fb = None
 
     def setUp(self):
         self.fb = FileBuilder()
+        self.fb.set_in_path('../../conf/srv')
+        self.fb.set_out_path('out2')
         self.fb.build_file('/etc/dhcpd.conf')
 
     def test_dhcpd_file_exists(self):
