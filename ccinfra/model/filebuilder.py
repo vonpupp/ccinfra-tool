@@ -37,6 +37,13 @@ class FileBuilder():
     def set_in_path(self, input_path):
         self.input_path = input_path
         self.load_initial_vars()
+    
+#     def set_prefix_path(self, prefix_path):
+#         self.input_path = input_path
+#         'conf/srv/etc/
+#         
+#         'conf/srv/'
+#         'conf/srv/etc/dhcpd.conf'
 
     def open_or_create_dir(self):
         self.input_path, self.output_path = self.get_io_paths()
@@ -49,13 +56,17 @@ class FileBuilder():
 
     def get_path_and_full_conf(self):
         self.conf_file = self.input_conf.split('/')[-1]
-        self.conf_path = self.input_conf.rsplit('/', 1)[0]
+        leading_path = self.input_conf.rsplit('/', 1)[0]
+        if leading_path.startswith('/'):
+            leading_path = leading_path[1:]
+        self.conf_path = self.input_path + leading_path
 
         return self.conf_path, self.conf_file
 
     def get_io_confs(self):
-        self.relative_etc_conf = self.input_conf.split('etc/')[1]
-        self.output_conf = OUTDIR + 'etc/' + self.relative_etc_conf
+        self.output_conf = self.output_path + self.conf_file
+        #self.relative_etc_conf = self.input_conf.split('etc/')[1]
+        #self.output_conf = OUTDIR + 'etc/' + self.relative_etc_conf
 
         return self.input_conf, self.output_conf
 
@@ -103,7 +114,7 @@ class FileBuilder():
                                            self.vars_conf['vars'].items())}
             return self.vars_data
 
-    def build_file(self, input_conf):
+    def set_file_in(self, input_conf):
         try:
             # I assume that conf/srv (two dirs) are
             # always prepended to the path
@@ -114,10 +125,18 @@ class FileBuilder():
 
             print self.input_conf
             print self.output_conf
+        except Exception, e:
+            raise e
 
+    def build_file(self, input_conf):
+        try:
+            # I assume that conf/srv (two dirs) are
+            # always prepended to the path
+            self.set_file_in(input_conf)
+            
             self.fin = open(input_conf)
             self.fout = self.open_or_create_dir()
-
+            
             vars_data = self.load_vars()
             #pprint(vars_data)
 

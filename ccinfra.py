@@ -65,7 +65,13 @@ def main(argv):
 
     # Do stuff
     srv = ServerSetup()
-    srv.set_in_path('conf/')
+    
+    #srv.set_in_path('conf/srv/etc/')
+    srv.set_in_path('conf/srv/')
+    #srv.set_conf_prefix('conf/srv/etc/dhcpd.conf')
+    #srv.set_prefix_path('conf/srv/')
+    
+    #srv.set_in_path('conf/')
     srv.set_out_path('out/')
     srv.isc_dhcpd_setup()
     srv.named_keys_setup()

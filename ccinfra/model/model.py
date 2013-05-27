@@ -13,7 +13,7 @@ class GeneralSetup():
     def __init__(self):
         pass
 
-    def is_opensuse_host():
+    def is_opensuse_host(self):
         return os.file_exists('/etc/SuSE-release')
 
 
@@ -30,7 +30,7 @@ class ServerSetup(GeneralSetup):
     def set_in_path(self, conf_in):
         # Assumed that server config will always be at:
         # conf_in/srv
-        self.root_conf_in = conf_in + 'srv/'
+        self.root_conf_in = conf_in
         self.fb.set_in_path(self.root_conf_in)
 
     def set_out_path(self, conf_out):

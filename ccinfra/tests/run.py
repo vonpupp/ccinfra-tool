@@ -4,6 +4,8 @@
 import unittest
 import sys
 from ccinfra.model.filebuilder import FileBuilder
+import os
+#import pudb
 
 
 class FileBuilderTestCase(unittest.TestCase):
@@ -11,9 +13,15 @@ class FileBuilderTestCase(unittest.TestCase):
 
     def setUp(self):
         self.fb = FileBuilder()
-        self.fb.set_in_path('../../conf/srv')
-        self.fb.set_out_path('out2')
-        self.fb.build_file('/etc/dhcpd.conf')
+        self.fb.set_in_path('../../conf/srv/')
+        #self.fb.set_in_path('../../conf/srv/etc')
+        self.fb.set_out_path('out2/')
+        
+    def test_000paths(self):
+        self.fb.set_file_in('/etc/dhcpd.conf')
+#         self.fb.get_path_and_full_conf()
+#         self.fb.get_io_confs()
+#         self.fb.get_io_paths()
 
     def test_dhcpd_file_exists(self):
         exists = os.path.exists(LOCAL_INSTALL_DIR)
