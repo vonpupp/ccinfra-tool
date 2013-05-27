@@ -2,3 +2,6 @@
 *.swp
 out/*
 .ropeproject/*
+bin/
+include/
+lib/

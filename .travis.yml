@@ -10,10 +10,11 @@ python:
 #  - "git clone https://github.com/ccinfra/conf.git"
 
 script:
-  - python setup.py clean
-  - python setup.py install
-  - python selftest.py
-  - python tests/run.py --installed
+#  - python setup.py clean
+#  - python setup.py install
+#  - python selftest.py
+#  - python tests/run.py --installed
+  - python unittest_ccinfra.py --installed
 
 branches:
   only:
