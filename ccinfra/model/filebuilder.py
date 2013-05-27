@@ -61,7 +61,8 @@ class FileBuilder():
             leading_path = leading_path[1:]
         self.conf_path = self.input_path + leading_path
 
-        return self.conf_path, self.conf_file
+        self.full_conf = self.conf_path + '/' + self.conf_file
+        return self.conf_path, self.full_conf
 
     def get_io_confs(self):
         self.output_conf = self.output_path + self.conf_file
@@ -134,7 +135,7 @@ class FileBuilder():
             # always prepended to the path
             self.set_file_in(input_conf)
             
-            self.fin = open(input_conf)
+            self.fin = open(self.full_conf)
             self.fout = self.open_or_create_dir()
             
             vars_data = self.load_vars()
