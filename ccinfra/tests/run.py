@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from unittest import TestCase, TestSuite, makeSuite, TextTestRunner, assertTrue
+from unittest import TestCase, TestSuite, makeSuite, TextTestRunner
 import sys
 from ccinfra.model.filebuilder import FileBuilder
 import os
@@ -27,7 +27,7 @@ class FileBuilderTestCase(TestCase):
 
     def test_dhcpd_file_exists(self):
         exists = os.path.exists(OUTPATH + 'dhcpd.conf')
-        assertTrue(exists)
+        self.assertTrue(exists)
 
     def test_dhcpd_file_line_count(self):
         pass
