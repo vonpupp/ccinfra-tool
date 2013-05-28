@@ -46,12 +46,12 @@ class FileBuilder():
 #         'conf/srv/etc/dhcpd.conf'
 
     def open_or_create_dir(self):
-        self.input_path, self.output_path = self.get_io_paths()
+        #self.input_path, self.output_path = self.get_io_paths()
         result = None
         try:
-            result = open(self.output_conf, 'w')
-        except:
             os.makedirs(self.output_path)
+        finally:
+            result = open(self.output_conf, 'w')
         return result
 
     def get_path_and_full_conf(self):
@@ -124,8 +124,8 @@ class FileBuilder():
             self.get_io_confs()
             self.get_io_paths()
 
-            print self.input_conf
-            print self.output_conf
+            #print self.input_conf
+            #print self.output_conf
         except Exception, e:
             raise e
 

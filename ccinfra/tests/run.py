@@ -5,10 +5,11 @@ from unittest import TestCase, TestSuite, makeSuite, TextTestRunner
 import sys
 from ccinfra.model.filebuilder import FileBuilder
 import os
+import shutil
 #import pudb
 
-INPATH = '../../conf/srv/'
-OUTPATH = 'out2/'
+INPATH = 'conf/srv/'
+OUTPATH = 'tests-out/'
 
 class FileBuilderTestCase(TestCase):
     fb = None
@@ -18,7 +19,13 @@ class FileBuilderTestCase(TestCase):
         self.fb.set_in_path(INPATH)
         #self.fb.set_in_path('../../conf/srv/etc')
         self.fb.set_out_path(OUTPATH)
-        
+       
+    def remove_dir(self, directory):
+        if os.path.exists(directory):
+            shutil.rmtree(directory)
+
+    ###
+
     def test_000paths(self):
         self.fb.set_file_in('/etc/dhcpd.conf')
         self.assertTrue(len(self.fb.full_conf) ==
@@ -26,15 +33,17 @@ class FileBuilderTestCase(TestCase):
         self.assertTrue(self.fb.input_conf in self.fb.full_conf)
         self.assertTrue(self.fb.conf_file in self.fb.full_conf)
         self.assertTrue(self.fb.conf_file in self.fb.output_conf)
-#         self.fb.get_path_and_full_conf()
-#         self.fb.get_io_confs()
-#         self.fb.get_io_paths()
 
     def test_dhcpd_file_exists(self):
-        filename = OUTPATH + 'dhcpd.conf'
-        self.fb.build_file(filename)
-        exists = os.path.exists(filename)
-        self.assertTrue(exists)
+        in_conf = '/etc/dhcpd.conf'
+        out_conf = 'dhcpd.conf'
+        
+        self.remove_dir(OUTPATH)
+        self.assertFalse(os.path.exists(OUTPATH))
+        
+        self.fb.build_file(in_conf)
+        
+        self.assertTrue(os.path.exists(OUTPATH))
 
     def test_dhcpd_file_line_count(self):
         pass
