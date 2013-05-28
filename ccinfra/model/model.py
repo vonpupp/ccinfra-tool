@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 
 import os
-from filebuilder import FileBuilder
+from conffactory import ConfFactory
 from subprocess import call
 
 
@@ -23,7 +23,7 @@ class ServerSetup(GeneralSetup):
     """
 
     def __init__(self):
-        self.fb = FileBuilder()
+        self.conf = ConfFactory()
         self.set_in_path('conf/')
         self.set_out_path('out/')
 
@@ -31,17 +31,17 @@ class ServerSetup(GeneralSetup):
         # Assumed that server config will always be at:
         # conf_in/srv
         self.root_conf_in = conf_in
-        self.fb.set_in_path(self.root_conf_in)
+        self.conf.set_in_path(self.root_conf_in)
 
     def set_out_path(self, conf_out):
         self.root_conf_out = conf_out
-        self.fb.set_out_path(self.root_conf_out)
+        self.conf.set_out_path(self.root_conf_out)
 
     def build_file(self, conf_in):
         if conf_in.startswith('/'):
             conf_in = conf_in[1:]
         conf = self.root_conf_in + conf_in
-        self.fb.build_file(conf)
+        self.conf.build_file(conf)
 
     def network_setup(self):
         pass

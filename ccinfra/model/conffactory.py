@@ -5,8 +5,8 @@ import json
 from pprint import pprint
 import os
 
-class FileBuilder():
-    def FileBuilder(self):
+class ConfFactory():
+    def __init__(self):
         self.conf_file = ''
         self.conf_path = ''
         self.input_path = ''

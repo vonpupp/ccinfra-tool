@@ -38,7 +38,7 @@ __copyright__ = '2013 Congregacao Crista no Brasil / Albert De La Fuente'
 import sys
 import argparse
 from subprocess import call
-from ccinfra.model.filebuilder import FileBuilder
+from ccinfra.model.conffactory import ConfFactory
 from ccinfra.model.confiterator import ConfIterator
 from ccinfra.model.model import ServerSetup
 
@@ -67,8 +67,8 @@ def main(argv):
     srv = ServerSetup()
     
     #srv.set_in_path('conf/srv/etc/')
-    srv.set_global_file('ccinfra.global')
-    srv.set_common_file('ccinfra.common')
+    srv.conf.set_global_file('ccinfra.global')
+    srv.conf.set_common_file('ccinfra.common')
     
     srv.set_in_path('conf/srv/')
     #srv.set_conf_prefix('conf/srv/etc/dhcpd.conf')
