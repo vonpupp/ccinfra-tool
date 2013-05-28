@@ -126,7 +126,7 @@ class FileBuilder():
 
             #print self.input_conf
             #print self.output_conf
-        except Exception, e:
+        except Exception as e:
             raise e
 
     def build_file(self, input_conf):
