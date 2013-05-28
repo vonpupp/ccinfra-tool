@@ -5,25 +5,6 @@ import json
 from pprint import pprint
 import os
 
-OUTDIR = 'out/'
-
-
-#class MyTemplate(Template):
-#    delimiter = '{{'
-#    pattern = r'''
-#    \{\{(?:
-#    (?P<escaped>\{\{)|
-#    (?P<named>[_a-z][_a-z0-9]*)\}\}|
-#    (?P<braced>[_a-z][_a-z0-9]*)\}\}|
-#    (?P<invalid>)
-#    )
-#    '''
-
-# class MyTemplate(string.Template):
-#     delimiter = '%'
-#     idpattern = '[a-z]+_[a-z]+'
-
-
 class FileBuilder():
     def FileBuilder(self):
         self.conf_file = ''
@@ -37,6 +18,12 @@ class FileBuilder():
     def set_in_path(self, input_path):
         self.input_path = input_path
         self.load_initial_vars()
+    
+    def set_global_file(self, global_file):
+        self.global_file = global_file
+        
+    def set_common_file(self, common_file):
+        self.global_file = common_file
     
 #     def set_prefix_path(self, prefix_path):
 #         self.input_path = input_path
@@ -94,10 +81,10 @@ class FileBuilder():
             self.vars_common = {}
             # First load the globals
             self.vars_global = self.load_vars_file(self.input_path +
-                                                   'ccinfra.global')
+                                                   self.global_file)
             # Then the commons
             self.vars_common = self.load_vars_file(self.input_path +
-                                                   'ccinfra.common')
+                                                   self.common_file)
         finally:
             self.vars_initial = {'vars': dict(self.vars_global['vars'].items() +
                                             self.vars_common['vars'].items())}

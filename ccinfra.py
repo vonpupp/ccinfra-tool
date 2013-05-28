@@ -68,6 +68,8 @@ def main(argv):
     
     #srv.set_in_path('conf/srv/etc/')
     srv.set_in_path('conf/srv/')
+    srv.set_global_file('ccinfra.global')
+    srv.set_common_file('ccinfra.common')
     #srv.set_conf_prefix('conf/srv/etc/dhcpd.conf')
     #srv.set_prefix_path('conf/srv/')
     
