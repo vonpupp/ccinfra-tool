@@ -11,20 +11,23 @@ class FileBuilder():
         self.conf_path = ''
         self.input_path = ''
         self.output_path = ''
+        self.global_file = None
+        self.common_file = None
 
-    def set_out_path(self, output_path):
-        self.output_path = output_path
-
-    def set_in_path(self, input_path):
-        self.input_path = input_path
-        self.load_initial_vars()
-    
     def set_global_file(self, global_file):
         self.global_file = global_file
         
     def set_common_file(self, common_file):
-        self.global_file = common_file
-    
+        self.common_file = common_file
+
+    def set_in_path(self, input_path):
+        self.input_path = input_path
+        if self.global_file != None and self.common_file != None:
+            self.load_initial_vars()
+        
+    def set_out_path(self, output_path):
+        self.output_path = output_path
+        
 #     def set_prefix_path(self, prefix_path):
 #         self.input_path = input_path
 #         'conf/srv/etc/
@@ -80,11 +83,13 @@ class FileBuilder():
             self.vars_global = {}
             self.vars_common = {}
             # First load the globals
-            self.vars_global = self.load_vars_file(self.input_path +
-                                                   self.global_file)
+            if self.global_file != None:
+                self.vars_global = self.load_vars_file(self.input_path +
+                                                       self.global_file)
             # Then the commons
-            self.vars_common = self.load_vars_file(self.input_path +
-                                                   self.common_file)
+            if self.common_file != None:
+                self.vars_common = self.load_vars_file(self.input_path +
+                                                       self.common_file)
         finally:
             self.vars_initial = {'vars': dict(self.vars_global['vars'].items() +
                                             self.vars_common['vars'].items())}

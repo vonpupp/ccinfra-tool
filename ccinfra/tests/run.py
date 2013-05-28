@@ -12,10 +12,10 @@ INPATH = 'conf/srv/'
 OUTPATH = 'tests-out/'
 
 class FileBuilderTestCase(TestCase):
-    fb = None
-
     def setUp(self):
         self.fb = FileBuilder()
+        self.fb.set_global_file('ccinfra.global')
+        self.fb.set_common_file('ccinfra.common')
         self.fb.set_in_path(INPATH)
         #self.fb.set_in_path('../../conf/srv/etc')
         self.fb.set_out_path(OUTPATH)
