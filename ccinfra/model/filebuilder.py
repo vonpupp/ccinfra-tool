@@ -143,16 +143,16 @@ class FileBuilder():
 
             js = json.dumps(vars_data, sort_keys=True,
                             indent=4, separators=(',', ' : '))
-            print js
+            #print js
             try:
                 for line in self.fin:
                     try:
                         #out_line = line
                         s = Template(line)
                         out_line = s.substitute(vars_data['vars'])
-                    except KeyError, err:
-                        print 'ERROR: ' + str(err) + ' variable is missing'
-                    except ValueError, err:
+                    except KeyError as err:
+                        print('ERROR: ' + str(err) + ' variable is missing')
+                    except ValueError as err:
                         out_line = line
                     finally:
                         self.fout.write(out_line)
