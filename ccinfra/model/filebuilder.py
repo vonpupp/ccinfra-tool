@@ -160,5 +160,5 @@ class FileBuilder():
                 self.fout.close()
                 self.fin.close()
             return self.output_conf
-        except Exception, e:
+        except Exception as e:
             raise e
