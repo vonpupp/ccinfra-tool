@@ -1,7 +1,7 @@
 CCInfra-tool
 ============
 
-.. Note:: CCInfra-tool supports Python 2.4, 2.5, 2.6, 2.7.
+.. Note:: CCInfra-tool supports Python 2.7 and 3.3.
 
 .. image:: https://api.travis-ci.org/ccinfra/ccinfra-tool.png
    :target: https://api.travis-ci.org/ccinfra/ccinfra-tool.png
