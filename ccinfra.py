@@ -67,15 +67,14 @@ def main(argv):
     srv = ServerSetup()
     
     #srv.set_in_path('conf/srv/etc/')
-    srv.conf.set_global_file('ccinfra.global')
-    srv.conf.set_common_file('ccinfra.common')
     
-    srv.set_in_path('conf/srv/')
+    
+    #srv.set_in_path('conf/srv/')
     #srv.set_conf_prefix('conf/srv/etc/dhcpd.conf')
     #srv.set_prefix_path('conf/srv/')
     
     #srv.set_in_path('conf/')
-    srv.set_out_path('out/')
+    #srv.set_out_path('out/')
     srv.isc_dhcpd_setup()
     srv.named_keys_setup()
     srv.named_setup()

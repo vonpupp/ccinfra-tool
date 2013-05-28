@@ -24,7 +24,9 @@ class ServerSetup(GeneralSetup):
 
     def __init__(self):
         self.conf = ConfFactory()
-        self.set_in_path('conf/')
+        self.conf.set_global_file('ccinfra.global')
+        self.conf.set_common_file('ccinfra.common')
+        self.set_in_path('conf/srv')
         self.set_out_path('out/')
 
     def set_in_path(self, conf_in):
@@ -38,10 +40,12 @@ class ServerSetup(GeneralSetup):
         self.conf.set_out_path(self.root_conf_out)
 
     def build_file(self, conf_in):
-        if conf_in.startswith('/'):
-            conf_in = conf_in[1:]
-        conf = self.root_conf_in + conf_in
-        self.conf.build_file(conf)
+        #if not self.root_conf_in.endswith('/'):
+        #    self.root_conf_in = self.root_conf_in + '/'
+        #if conf_in.startswith('/'):
+        #    conf_in = conf_in[1:]
+        #conf = self.root_conf_in + conf_in
+        self.conf.build_file(conf_in)
 
     def network_setup(self):
         pass

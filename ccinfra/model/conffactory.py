@@ -40,6 +40,8 @@ class ConfFactory():
         result = None
         try:
             os.makedirs(self.output_path)
+        except:
+            pass
         finally:
             result = open(self.output_conf, 'w')
         return result
@@ -47,8 +49,8 @@ class ConfFactory():
     def get_path_and_full_conf(self):
         self.conf_file = self.input_conf.split('/')[-1]
         leading_path = self.input_conf.rsplit('/', 1)[0]
-        if leading_path.startswith('/'):
-            leading_path = leading_path[1:]
+        #if leading_path.startswith('/'):
+        #    leading_path = leading_path[1:]
         self.conf_path = self.input_path + leading_path
 
         self.full_conf = self.conf_path + '/' + self.conf_file
@@ -139,7 +141,7 @@ class ConfFactory():
             try:
                 for line in self.fin:
                     try:
-                        #out_line = line
+                        out_line = line
                         s = Template(line)
                         out_line = s.substitute(vars_data['vars'])
                     except KeyError as err:
