@@ -21,12 +21,19 @@ class FileBuilderTestCase(TestCase):
         
     def test_000paths(self):
         self.fb.set_file_in('/etc/dhcpd.conf')
+        self.assertTrue(len(self.fb.full_conf) ==
+                        len(self.fb.conf_path) + len(self.fb.conf_file) + 1)
+        self.assertTrue(self.fb.input_conf in self.fb.full_conf)
+        self.assertTrue(self.fb.conf_file in self.fb.full_conf)
+        self.assertTrue(self.fb.conf_file in self.fb.output_conf)
 #         self.fb.get_path_and_full_conf()
 #         self.fb.get_io_confs()
 #         self.fb.get_io_paths()
 
     def test_dhcpd_file_exists(self):
-        exists = os.path.exists(OUTPATH + 'dhcpd.conf')
+        filename = OUTPATH + 'dhcpd.conf'
+        self.fb.build_file(filename)
+        exists = os.path.exists(filename)
         self.assertTrue(exists)
 
     def test_dhcpd_file_line_count(self):
