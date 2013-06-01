@@ -1,6 +1,6 @@
 
 import unittest
-import ccinfra.tests.run as ccit
+import tests.run as ccit
 
 #suiteFew = unittest.TestSuite()
-unittest.TextTestRunner(verbosity=2).run(ccit.fast_tests_suite())
+unittest.TextTestRunner(verbosity=2).run(ccit.tests_suite())

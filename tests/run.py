@@ -1,97 +1,63 @@
-from __future__ import print_function
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
-# minimal test runner
+from unittest import TestCase, TestSuite, makeSuite, TextTestRunner
+import sys
+from ccinfra.model.conffactory import ConfFactory
+import os
+import shutil
+#import pudb
 
-import glob, os, os.path, sys, tempfile
+INPATH = 'conf/srv/'
+OUTPATH = 'tests-out/'
 
-try:
-    root = os.path.dirname(__file__)
-except NameError:
-    root = os.path.dirname(sys.argv[0])
+class FileBuilderTestCase(TestCase):
+    def setUp(self):
+        self.conf = ConfFactory()
+        self.conf.set_global_file('ccinfra.global')
+        self.conf.set_common_file('ccinfra.common')
+        self.conf.set_in_path(INPATH)
+        #self.conf.set_in_path('../../conf/srv/etc')
+        self.conf.set_out_path(OUTPATH)
 
-#if not os.path.isfile("PIL/Image.py"):
-#    print("***", "please run this script from the PIL development directory as")
-#    print("***", "$ python Tests/run.py")
-#    sys.exit(1)
+    def remove_dir(self, directory):
+        if os.path.exists(directory):
+            shutil.rmtree(directory)
 
-print("-" * 68)
+    ###
 
-python_options = []
-tester_options = []
+    def test_000paths(self):
+        self.conf.set_file_in('/etc/dhcpd.conf')
+        self.assertTrue(len(self.conf.full_conf) ==
+                        len(self.conf.conf_path) + len(self.conf.conf_file) + 1)
+        self.assertTrue(self.conf.input_conf in self.conf.full_conf)
+        self.assertTrue(self.conf.conf_file in self.conf.full_conf)
+        self.assertTrue(self.conf.conf_file in self.conf.output_conf)
 
-if "--installed" not in sys.argv:
-    python_options.append("-S")
-    os.environ["PYTHONPATH"] = "."
+    def test_dhcpd_file_exists(self):
+        in_conf = '/etc/dhcpd.conf'
+        out_conf = 'dhcpd.conf'
 
-if "--coverage" in sys.argv:
-    tester_options.append("--coverage")
+        self.remove_dir(OUTPATH)
+        self.assertFalse(os.path.exists(OUTPATH))
 
-if "--log" in sys.argv:
-    tester_options.append("--log")
+        self.conf.build_file(in_conf)
 
-files = glob.glob(os.path.join(root, "test_*.py"))
-files.sort()
+        self.assertTrue(os.path.exists(OUTPATH))
 
-success = failure = 0
-include = [x for x in sys.argv[1:] if x[:2] != "--"]
-skipped = []
+    def test_dhcpd_file_line_count(self):
+        pass
 
-python_options = " ".join(python_options)
-tester_options = " ".join(tester_options)
 
-for file in files:
-    test, ext = os.path.splitext(os.path.basename(file))
-    if include and test not in include:
-        continue
-    print("running", test, "...")
-    # 2>&1 works on unix and on modern windowses. we might care about
-    # very old Python versions, but not ancient microsoft products :-)
-    out = os.popen("%s %s -u %s %s 2>&1" % (
-            sys.executable, python_options, file, tester_options
-            ))
-    result = out.read().strip()
-    if result == "ok":
-        result = None
-    elif result == "skip":
-        print("---", "skipped") # FIXME: driver should include a reason
-        skipped.append(test)
-        continue
-    elif not result:
-        result = "(no output)"
-    status = out.close()
-    if status or result:
-        if status:
-            print("=== error", status)
-        if result:
-            if result[-3:] == "\nok":
-                # if there's an ok at the end, it's not really ok
-                result = result[:-3]
-            print(result)
-        failure = failure + 1
-    else:
-        success = success + 1
+def tests_suite():
+    suite = TestSuite()
+    suite.addTest(makeSuite(FileBuilderTestCase))
+    return suite
 
-print("-" * 68)
+def slow_test_suite():
+    suite = TestSuite()
+    suite.addTest(makeSuite(FileBuilderTestCase))
+    return suite
 
-temp_root = os.path.join(tempfile.gettempdir(), 'ccinfra-tool-tests')
-tempfiles = glob.glob(os.path.join(temp_root, "temp_*"))
-if tempfiles:
-    print("===", "remaining temporary files")
-    for file in tempfiles:
-        print(file)
-    print("-"*68)
-
-def tests(n):
-    if n == 1:
-        return "1 test"
-    else:
-        return "%d tests" % n
-
-if skipped:
-    print("---", tests(len(skipped)), "skipped.")
-    print(skipped)
-if failure:
-    print("***", tests(failure), "of", (success + failure), "failed.")
-    sys.exit(1)
-else:
-    print(tests(success), "passed.")
+if __name__ == '__main__':
+    TextTestRunner(verbosity=2).run(tests_suite())
