@@ -22,5 +22,9 @@ branches:
   only:
       - master
 
+notifications:
+  email:
+    - vonpupp@gmail.com
+
 after_sucess:
   coveralls --verbose
