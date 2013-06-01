@@ -20,11 +20,11 @@ script:
 
 branches:
   only:
-      - master
+    - master
 
 notifications:
   email:
     - vonpupp@gmail.com
 
-after_sucess:
-  coveralls --verbose
+after_success:
+  - coveralls --verbose
