@@ -17,11 +17,10 @@ script:
 #  - python unittest_ccinfra.py --installed
   - coverage run unittest_ccinfra.py --installed
   - coverage report -m
-  - coveralls --verbose
 
 branches:
   only:
       - master
 
 after_sucess:
-  - coveralls --verbose
+  coveralls --verbose
