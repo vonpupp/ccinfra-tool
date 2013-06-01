@@ -16,9 +16,10 @@ script:
 #  - python tests/run.py --installed
 #  - python unittest_ccinfra.py --installed
   - coverage run unittest_ccinfra.py --installed
+  - coverage report -m
 branches:
   only:
       - master
 
 after_sucess:
-  - coveralls
+  - coveralls --verbose
