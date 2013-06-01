@@ -28,4 +28,4 @@ notifications:
     - vonpupp@gmail.com
 
 after_script:
-  - coveralls --verbose
+  - coveralls
