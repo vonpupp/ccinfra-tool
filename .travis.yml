@@ -14,8 +14,8 @@ script:
 #  - python setup.py install
 #  - python selftest.py
 #  - python tests/run.py --installed
-  - python unittest_ccinfra.py --installed
-
+#  - python unittest_ccinfra.py --installed
+  - coverage run unittest_ccinfra.py --installed
 branches:
   only:
       - master
