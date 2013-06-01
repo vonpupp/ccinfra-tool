@@ -4,7 +4,14 @@ from setuptools import setup
 setup(
     name='ccinfratool',
     version='0.1',
-    packages=['ccinfra'],
+    packages=[
+        'ccinfra',
+        'ccinfra.tests'
+    ],
+#    tests_require=['mock', 'pytest'],
+    test_suite='ccinfra.tests',
+    #test_loader='ccinfra.tests:',
+    #test_loader='ccinfra.tests.run',
     url='https://github.com/ccinfra/ccinfra-tool',
     license='GPLv2',
     author='Albert De La Fuente',
@@ -12,10 +19,6 @@ setup(
     description='Automates configuration of servers and stations on the CCINFRA network',
     long_description=open('README.rst').read() + '\n\n' + open('CHANGELOG.rst').read(),
 #    install_requires=['PyYAML>=3.10', 'docopt>=0.6.1', 'coverage>=3.6', 'requests>=1.0.0', 'sh>=1.08'],
-#    tests_require=['mock', 'pytest'],
-#    test_suite='tests',
-    test_loader='unittest_ccinfra',
-    #test_loader='ccinfra.tests.run',
     classifiers=[
         'Development Status :: 1 - Alpha',
         'Intended Audience :: Other Audience',
