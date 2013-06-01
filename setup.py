@@ -33,6 +33,6 @@ setup(
         'Topic :: System :: Monitoring',
         'Topic :: System :: Networking :: Monitoring',
         'Topic :: System :: Software Distribution',
-        'Topic :: System :: Systems Administration',
+        'Topic :: System :: Systems Administration'
     ],
 )
