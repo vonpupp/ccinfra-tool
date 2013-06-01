@@ -5,9 +5,8 @@ python:
   - "3.3"
 
 #install: "sudo apt-get -qq install libfreetype6-dev liblcms1-dev libwebp-dev"
-install:
+#install:
 #  - "git clone https://github.com/ccinfra/conf.git"
-  - pip install coveralls --use-mirrors
 
 script:
 #  - python setup.py clean
@@ -19,6 +18,3 @@ script:
 branches:
   only:
       - master
-
-after_sucess:
-  - coveralls
